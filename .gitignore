@@ -3,3 +3,4 @@
 *.licenseheader
 obj
 bin
+.~lock.ClassDiagram.odg#
