@@ -19,8 +19,11 @@ This is the simplest scenario: using the `DefaultNmeaHandler` class.  `DefaultNm
 * VTG : _Track made good and ground speed_
 
 `DefaultNmeaHandler` implements the contract by invoking the event handler `LogNmeaMessage` each time a supported NMEA sentence is successfully parsed.
-    
->     // ... Create an object to handle parsed NMEA messages
+
+>     using InvernessPark.Utilities.NMEA;
+>     
+>     
+>     // ... Create an object to handle parsed NMEA messages
 >     DefaultNmeaHandler nmeaHandler = new DefaultNmeaHandler() ;
 >     nmeaHandler.LogNmeaMessage += str => {
 >         Console.WriteLine("Received: {0}", str ) ;
