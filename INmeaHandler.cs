@@ -31,12 +31,12 @@ namespace InvernessPark.Utilities.NMEA {
     /// 
     /// </summary>
     public interface INmeaHandler {
-        void HandleVTG(INmeaMessage msg);
-        void HandleHDT(INmeaMessage msg);
-        void HandleGSA(INmeaMessage msg);
         void HandleGGA(INmeaMessage msg);
+        void HandleGSA(INmeaMessage msg);
         void HandleGST(INmeaMessage msg);
         void HandleGSV(INmeaMessage msg);
+        void HandleHDT(INmeaMessage msg);
         void HandleRMC(INmeaMessage msg);
+        void HandleVTG(INmeaMessage msg);
     }
 }
