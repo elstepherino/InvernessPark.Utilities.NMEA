@@ -69,6 +69,7 @@
     <Compile Include="Types\StatusEnum.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="InvernessPark.Utilities.NMEA.licenseheader" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
