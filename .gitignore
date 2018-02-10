@@ -1,2 +1,5 @@
 
 .DS_Store
+*.licenseheader
+obj/Debug/DesignTimeResolveAssemblyReferences.cache
+obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
