@@ -20,9 +20,7 @@ This is the simplest scenario: using the `DefaultNmeaHandler` class.  `DefaultNm
 
 `DefaultNmeaHandler` implements the contract by invoking the event handler `LogNmeaMessage` each time a supported NMEA sentence is successfully parsed.
 
->     using InvernessPark.Utilities.NMEA;
->     
->     
+>     using InvernessPark.Utilities.NMEA;          
 >     // ... Create an object to handle parsed NMEA messages
 >     DefaultNmeaHandler nmeaHandler = new DefaultNmeaHandler() ;
 >     nmeaHandler.LogNmeaMessage += str => {
