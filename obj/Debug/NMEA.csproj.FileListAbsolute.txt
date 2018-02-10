@@ -1,0 +1,8 @@
+\\VBOXSVR\Shared\Workspace\InvernessPark\Utilities\InvernessPark.Utilities.NMEA\obj\Debug\NMEA.csprojResolveAssemblyReference.cache
+\\VBOXSVR\Shared\Workspace\InvernessPark\Utilities\InvernessPark.Utilities.NMEA\obj\Debug\InvernessPark.Utilities.NMEA.Strings.resources
+\\VBOXSVR\Shared\Workspace\InvernessPark\Utilities\InvernessPark.Utilities.NMEA\obj\Debug\NMEA.csproj.GenerateResource.Cache
+\\VBOXSVR\Shared\Workspace\InvernessPark\Utilities\InvernessPark.Utilities.NMEA\obj\Debug\NMEA.csproj.CoreCompileInputs.cache
+\\VBOXSVR\Shared\Workspace\InvernessPark\Utilities\InvernessPark.Utilities.NMEA\bin\Debug\NMEA.dll
+\\VBOXSVR\Shared\Workspace\InvernessPark\Utilities\InvernessPark.Utilities.NMEA\bin\Debug\NMEA.pdb
+\\VBOXSVR\Shared\Workspace\InvernessPark\Utilities\InvernessPark.Utilities.NMEA\obj\Debug\NMEA.dll
+\\VBOXSVR\Shared\Workspace\InvernessPark\Utilities\InvernessPark.Utilities.NMEA\obj\Debug\NMEA.pdb
