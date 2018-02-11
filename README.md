@@ -1,5 +1,5 @@
 # InvernessPark.Utilities.NMEA
-Simple NMEA-0183 parser
+Simple NMEA-0183 parser in C#.
 
 # Welcome!
 
