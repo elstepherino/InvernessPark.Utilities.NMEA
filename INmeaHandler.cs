@@ -24,10 +24,9 @@ SOFTWARE.
 namespace InvernessPark.Utilities.NMEA {
 
     /// <summary>
-    /// NMEA handler contract, to be implemented by the application latyer.
+    /// NMEA handler contract, to be implemented by the application layer.
     /// 
-    /// Note:
-    /// This is where you can add support for more NMEA data types.
+    /// Note: This is where you can add support for more NMEA data types.
     /// 
     /// </summary>
     public interface INmeaHandler {

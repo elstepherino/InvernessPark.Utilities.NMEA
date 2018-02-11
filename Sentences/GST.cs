@@ -35,7 +35,13 @@ namespace InvernessPark.Utilities.NMEA.Sentences {
 
         public string DataTypeName { get; set; }
         public TimeSpan UTC { get; set; }
-
+        public float RMS { get; set; }
+        public float SmjrStdev { get ; set ; }
+        public float SmnrStdev { get; set; }
+        public float Orientation { get; set; } // degrees true north
+        public float LatitudeErrorStdev { get; set; }
+        public float LongitudeErrorStdev { get; set; }
+        public float AltitudeErrorStdev { get; set; }
 
         public GST() {
             DataTypeName = "GPGST";
@@ -44,15 +50,27 @@ namespace InvernessPark.Utilities.NMEA.Sentences {
 
         private void Reset() {
             UTC = TimeSpan.MinValue;
-
+            RMS = 0;
+            SmjrStdev = 0;
+            SmnrStdev = 0;
+            Orientation = 0;
+            LatitudeErrorStdev = 0;
+            LongitudeErrorStdev = 0;
+            AltitudeErrorStdev = 0;
         }
 
         public override string Payload {
             get {
                 List<string> tokens = new List<string> {
-                DataTypeName,
-                    UTC.ToString(@"hhmmss\.fff"),
-
+                    DataTypeName,
+                    UTC.ToString(@"hhmmss\.ff"),
+                    RMS.ToString("0.00"),
+                    SmjrStdev.ToString("0.00"),
+                    SmnrStdev.ToString("0.00"),
+                    Orientation.ToString("0.0###"),
+                    LatitudeErrorStdev.ToString("0.00"),
+                    LongitudeErrorStdev.ToString("0.00"),
+                    AltitudeErrorStdev.ToString("0.00")
                 };
                 return string.Join(DELIM_FIELDS, tokens);
             }
@@ -60,8 +78,14 @@ namespace InvernessPark.Utilities.NMEA.Sentences {
 
         public override INmeaMessage ParseFields(string[] tokens) {
             DataTypeName = tokens[0].TrimStart('$');
-            UTC = TimeSpan.ParseExact(tokens[1], @"hhmmss\.FFF", CultureInfo.InvariantCulture);
-
+            UTC = TimeSpan.ParseExact(tokens[1], @"hhmmss\.FF", CultureInfo.InvariantCulture);
+            RMS = float.Parse(tokens[2]);
+            SmjrStdev = float.Parse(tokens[3]);
+            SmnrStdev = float.Parse(tokens[4]);
+            Orientation = float.Parse(tokens[5]);
+            LatitudeErrorStdev = float.Parse(tokens[6]);
+            LongitudeErrorStdev = float.Parse(tokens[7]);
+            AltitudeErrorStdev = float.Parse(tokens[8]);
             return this;
         }
     }

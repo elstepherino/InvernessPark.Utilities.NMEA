@@ -172,7 +172,6 @@ namespace InvernessPark.Utilities.NMEA {
             UInt32 msgCksum = Convert.ToUInt32(cksumStr, 16);
             UInt32 compCksum = BaseNmeaMessage.ComputeChecksum(bytes, 1, payloadLen);
             if (msgCksum != compCksum) {
-                string s = Encoding.ASCII.GetString(bytes).Trim('\0');
                 OnNmeaMessageFailedChecksum(bytes, index, count, compCksum, msgCksum );
                 return;
             }
@@ -232,7 +231,7 @@ namespace InvernessPark.Utilities.NMEA {
         }
 
         /// <summary>
-        /// Callled when a valid NMEA sentence is not supported
+        /// Called when a valid NMEA sentence is not supported
         /// </summary>
         /// <param name="bytes"></param>
         /// <param name="index"></param>

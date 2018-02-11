@@ -65,12 +65,12 @@ namespace InvernessPark.Utilities.NMEA {
         }
 
         /// <summary>
-        /// DEfault starting state
+        /// Default starting state
         /// </summary>
         private State _state = State.Idle;
         
         /// <summary>
-        /// NUmber of bytes buffered thus far.
+        /// Number of bytes buffered thus far.
         /// </summary>
         public int Length {
             get {
@@ -154,13 +154,12 @@ namespace InvernessPark.Utilities.NMEA {
             // ... If we;ve run out of space
             if (Available == 0) {
                 // ... reset everything
-                _state = State.Idle;
                 Reset();
             }
         }
 
         /// <summary>
-        /// ersets the parsing state and offset in the receive buffer
+        /// Resets the parsing state and offset in the receive buffer
         /// </summary>
         public void Reset() {
             _offset = 0;
