@@ -27,7 +27,7 @@ This is the simplest scenario: using the `DefaultNmeaHandler` class.  `DefaultNm
 >     // ... Create an object to handle parsed NMEA messages
 >     DefaultNmeaHandler nmeaHandler = new DefaultNmeaHandler() ;
 >     nmeaHandler.LogNmeaMessage += str => {
->         Console.WriteLine("Received: {0}", str ) ;
+>         Console.WriteLine("New NMEA Message: {0}", str ) ;
 >     };
 >     
 >     // ... Create the NMEA receiver
