@@ -30,9 +30,6 @@ namespace InvernessPark.Utilities.NMEA.Types {
     /// </summary>
     public class Latitude : GeoAngle {
 
-        /// <summary>
-        /// Half a piece of pie.  Mmmm.
-        /// </summary>
         const double HALF_PI = Math.PI / 2;
 
         /// <summary>
