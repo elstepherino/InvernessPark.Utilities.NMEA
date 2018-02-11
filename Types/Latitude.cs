@@ -26,7 +26,7 @@ using System;
 namespace InvernessPark.Utilities.NMEA.Types {
 
     /// <summary>
-    /// Specialization of GeAngle when used for Latitudes
+    /// Specialization of GeoAngle when used for Latitudes
     /// </summary>
     public class Latitude : GeoAngle {
 
