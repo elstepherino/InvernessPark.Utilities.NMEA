@@ -38,7 +38,7 @@ namespace InvernessPark.Utilities.NMEA.Types {
     public static class FixSelectionModeExtensions {
 
         /// <summary>
-        /// From enum to NMEA repesentation
+        /// From enum to NMEA representation
         /// </summary>
         /// <param name="mode"></param>
         /// <returns></returns>

@@ -234,7 +234,13 @@ namespace InvernessPark.Utilities.NMEA.Types {
                 if (tokens.Length != 2) {
                     throw new ArgumentException(nameof(s));
                 }
-                int sign = tokens[1].ToUpper().Trim()[0] == 'N' ? 1 : -1;
+                int sign = 0;
+                switch (tokens[1].ToUpper().Trim()[0]) {
+                    case 'N': case 'E': sign = 1; break;
+                    case 'S': case 'W': sign = -1; break;
+                    default:
+                        throw new ArgumentException(nameof(s));
+                }
 
                 double number = double.Parse(tokens[0].Trim());
                 int wholeDegrees = Convert.ToInt32(Math.Floor(number / 100));
@@ -268,7 +274,13 @@ namespace InvernessPark.Utilities.NMEA.Types {
                 if (tokens.Length != 2) {
                     throw new ArgumentException(nameof(s));
                 }
-                int sign = tokens[1].ToUpper().Trim()[0] == 'N' ? 1 : -1;
+                int sign = 0;
+                switch (tokens[1].ToUpper().Trim()[0] ) {
+                    case 'N': case 'E': sign = 1;break;
+                    case 'S': case 'W': sign = -1; break;
+                    default:
+                        throw new ArgumentException(nameof(s));
+                }
 
                 double number = double.Parse(tokens[0].Trim());
                 int wholeDegrees = Convert.ToInt32(Math.Floor(number / 10000));
@@ -292,7 +304,12 @@ namespace InvernessPark.Utilities.NMEA.Types {
                         wholeDegrees *= sign; // Abs
                         break;
                     case 4:
-                        sign = tokens[3].Trim().ToUpper()[0] == 'S' ? -1 : 1;
+                        switch (tokens[1].ToUpper().Trim()[0]) {
+                            case 'N': case 'E': sign = 1; break;
+                            case 'S': case 'W': sign = -1; break;
+                            default:
+                                throw new ArgumentException(nameof(s));
+                        }
                         break;
                     default:
                         throw new ArgumentException(nameof(s));

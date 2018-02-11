@@ -30,8 +30,6 @@ namespace InvernessPark.Utilities.NMEA.Types {
     /// </summary>
     public class Longitude : GeoAngle {
 
-        //static readonly char[] DELIMS = new char[] { ',', ' ', '\'', '"', InvernessPark.Utilities.UnitConversion.Strings.degrees[0] };
-
         /// <summary>
         /// Default constructor
         /// </summary>
