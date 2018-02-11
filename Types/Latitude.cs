@@ -80,7 +80,7 @@ namespace InvernessPark.Utilities.NMEA.Types {
         }
 
         /// <summary>
-        /// Implements string representation of DMM for longitudes
+        /// Implements string representation of DMM for latitudes
         /// </summary>
         /// <param name="wholeDegrees"></param>
         /// <param name="decimalMinutes"></param>
@@ -101,7 +101,7 @@ namespace InvernessPark.Utilities.NMEA.Types {
         }
 
         /// <summary>
-        /// Implements string representation of DMS for longitudes
+        /// Implements string representation of DMS for latitudes
         /// </summary>
         /// <param name="wholeDegrees"></param>
         /// <param name="decimalMinutes"></param>
