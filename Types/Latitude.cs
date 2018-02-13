@@ -20,7 +20,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
- */
+*/
 using System;
 
 namespace InvernessPark.Utilities.NMEA.Types {
@@ -75,7 +75,7 @@ namespace InvernessPark.Utilities.NMEA.Types {
         /// <param name="fmt"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static Latitude Parse(string s, Format fmt, FormatOptions options) {
+        public static Latitude Parse(string s, GeoAngleFormat fmt, GeoAngleFormatOptions options) {
             return new Latitude() { Degrees = ParseDegrees(s, fmt, options) };
         }
 
@@ -87,15 +87,15 @@ namespace InvernessPark.Utilities.NMEA.Types {
         /// <param name="sign"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        protected override string ToStringDMM(int wholeDegrees, double decimalMinutes, int sign, FormatOptions options) {
+        protected override string ToStringDMM(DMMComponents dmm, GeoAngleFormatOptions options) {
             string rc = null;
-            char letter = sign < 0 ? 'S' : 'N';
+            char letter = dmm.get_sign() < 0 ? 'S' : 'N';
 
-            if (options == FormatOptions.Compact) {
-                rc = string.Format("{0:00}{1:00.0000},{2}", wholeDegrees, decimalMinutes, letter);
+            if (options == GeoAngleFormatOptions.Compact) {
+                rc = string.Format("{0:00}{1:00.0000},{2}", dmm.get_wholeDegrees(), dmm.get_decimalMinutes(), letter);
             }
             else {
-                rc = string.Format("{0}{1} {2:0.######}'", sign * wholeDegrees, Strings.degrees, decimalMinutes);
+                rc = string.Format("{0}{1} {2:0.######}'", dmm.get_sign() * dmm.get_wholeDegrees(), Strings.degrees, dmm.get_decimalMinutes());
             }
             return rc;
         }
@@ -108,15 +108,15 @@ namespace InvernessPark.Utilities.NMEA.Types {
         /// <param name="sign"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        protected override string ToStringDMS(int wholeDegrees, int wholeMinutes, double decimalSeconds, int sign, FormatOptions options) {
+        protected override string ToStringDMS(DMSComponents dms, GeoAngleFormatOptions options) {
             string rc = null;
-            char letter = sign < 0 ? 'S' : 'N';
+            char letter = dms.get_sign() < 0 ? 'S' : 'N';
 
-            if (options == FormatOptions.Compact) {
-                rc = string.Format("{0:00}{1:00}{2:00.0000},{3}", wholeDegrees, wholeMinutes, decimalSeconds, letter);
+            if (options == GeoAngleFormatOptions.Compact) {
+                rc = string.Format("{0:00}{1:00}{2:00.0000},{3}", dms.get_wholeDegrees(), dms.get_wholeMinutes(), dms.get_decimalSeconds(), letter);
             }
             else {
-                rc = string.Format("{0}{1} {2}' {3:0.####} {4}\"", wholeDegrees, Strings.degrees, wholeMinutes, decimalSeconds, letter);
+                rc = string.Format("{0}{1} {2}' {3:0.####}\" {4}", dms.get_wholeDegrees(), Strings.degrees, dms.get_wholeMinutes(), dms.get_decimalSeconds(), letter);
             }
             return rc;
         }

@@ -59,7 +59,7 @@ namespace InvernessPark.Utilities.NMEA {
         /// <summary>
         /// State of NMEA parsing
         /// </summary>
-        private enum State {
+        public enum StateEnum {
             Idle,   // Currently not parsing a NMEA sentence (buffering bytes)
             Payload // Actively parsing a NMEA sentence
         }
@@ -67,8 +67,8 @@ namespace InvernessPark.Utilities.NMEA {
         /// <summary>
         /// Default starting state
         /// </summary>
-        private State _state = State.Idle;
-        
+        private StateEnum _state = StateEnum.Idle;
+
         /// <summary>
         /// Number of bytes buffered thus far.
         /// </summary>
@@ -96,6 +96,8 @@ namespace InvernessPark.Utilities.NMEA {
             }
         }
 
+        public StateEnum State { get => _state; }
+
         /// <summary>
         /// Callback invoked when a new NMEA message has been parsed
         /// </summary>
@@ -107,9 +109,15 @@ namespace InvernessPark.Utilities.NMEA {
         /// <param name="b"></param>
         public void Append(byte b) {
 
+            // ... If we;ve run out of space
+            if (Available == 0) {
+                // ... reset everything
+                Reset();
+            }
+
             switch (_state) {
                 // ... If we're waiting for the start of NMEA message
-                case State.Idle:
+                case StateEnum.Idle:
 
                     // ... If the byte is indeed the SOM
                     if (b == DELIM_SOM) {
@@ -118,14 +126,14 @@ namespace InvernessPark.Utilities.NMEA {
                         _buffer[_offset++] = b;
                         
                         // ... We are now officially parsing a NMEA message
-                        _state = State.Payload;
+                        _state = StateEnum.Payload;
                     }
 
                     // *** Note: we only buffe rbytes if we're parsing a NMEA sentence
                     break;
 
                 // ... If we're actively in the process of parsing a NMEA message
-                case State.Payload:
+                case StateEnum.Payload:
                     
                     bool isMessageReceived = false;
 
@@ -150,12 +158,6 @@ namespace InvernessPark.Utilities.NMEA {
                     }
                     break;
             }
-
-            // ... If we;ve run out of space
-            if (Available == 0) {
-                // ... reset everything
-                Reset();
-            }
         }
 
         /// <summary>
@@ -163,7 +165,7 @@ namespace InvernessPark.Utilities.NMEA {
         /// </summary>
         public void Reset() {
             _offset = 0;
-            _state = State.Idle;
+            _state = StateEnum.Idle;
         }
 
         /// <summary>
@@ -174,6 +176,16 @@ namespace InvernessPark.Utilities.NMEA {
         /// <param name="count"></param>
         private void OnNMEAMessageReceived(byte[] bytes, int index, int count) {
             NMEAMessageReceived?.Invoke(bytes, index, count);
+        }
+
+        /// <summary>
+        /// Apppend many bytes to a stream
+        /// </summary>
+        /// <param name="bytes"></param>
+        public void Append(byte[] bytes) {
+            foreach (byte b in bytes) {
+                Append(b);
+            }
         }
     }
 }

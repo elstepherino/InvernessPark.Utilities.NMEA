@@ -21,14 +21,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace InvernessPark.Utilities.NMEA.Types {
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-    /// <summary>
-    /// NMEA-0183 GPS Fix
-    /// </summary>
-    public enum Fix3DEnum {
-        NoFix=1,
-        Fix2D=2,
-        Fix3D=3
+namespace InvernessPark.Utilities.NMEA.Types {
+    public enum GeoAngleFormat {
+        DDD, // Decimal degrees
+        DMM, // Whole degrees, decimal minutes
+        DMS  // Whole degrees, whole minutes, decimal seconds
     }
 }

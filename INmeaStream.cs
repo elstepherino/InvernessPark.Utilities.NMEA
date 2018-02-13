@@ -63,6 +63,12 @@ namespace InvernessPark.Utilities.NMEA {
         void Append(byte b);
 
         /// <summary>
+        /// Appends many bytes to the stream
+        /// </summary>
+        /// <param name="b"></param>
+        void Append(byte [] bytes);
+
+        /// <summary>
         /// Resets the stream
         /// </summary>
         void Reset();

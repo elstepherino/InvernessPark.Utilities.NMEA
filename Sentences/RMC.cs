@@ -74,8 +74,8 @@ namespace InvernessPark.Utilities.NMEA.Sentences {
                     DataTypeName,
                     _utc.TimeOfDay.ToString(@"hhmmss\.fff"),
                     Status.ToNmeaString(),
-                    Latitude.ToString(GeoAngle.Format.DMM, GeoAngle.FormatOptions.Compact),
-                    Longitude.ToString(GeoAngle.Format.DMM, GeoAngle.FormatOptions.Compact),
+                    Latitude.ToString(GeoAngleFormat.DMM, GeoAngleFormatOptions.Compact),
+                    Longitude.ToString(GeoAngleFormat.DMM, GeoAngleFormatOptions.Compact),
                     SpeedAboveGroundKnots.ToString("0.0#"),
                     TrackAngleTrueNorthDegrees.ToString("0.0#"),
                     _utc.Date.ToString("ddMMyy"),
@@ -93,8 +93,8 @@ namespace InvernessPark.Utilities.NMEA.Sentences {
             DataTypeName = tokens[0].TrimStart('$');
             TimeSpan ts = TimeSpan.ParseExact(tokens[1], @"hhmmss\.FFF", CultureInfo.InvariantCulture);
             Status = StatusEnumExtensions.FromNmeaString(tokens[2]);
-            Latitude = Latitude.Parse(tokens[3] + DELIM_FIELDS + tokens[4], GeoAngle.Format.DMM, GeoAngle.FormatOptions.Compact);
-            Longitude = Longitude.Parse(tokens[5] + DELIM_FIELDS + tokens[6], GeoAngle.Format.DMM, GeoAngle.FormatOptions.Compact);
+            Latitude = Latitude.Parse(tokens[3] + DELIM_FIELDS + tokens[4], GeoAngleFormat.DMM, GeoAngleFormatOptions.Compact);
+            Longitude = Longitude.Parse(tokens[5] + DELIM_FIELDS + tokens[6], GeoAngleFormat.DMM, GeoAngleFormatOptions.Compact);
             SpeedAboveGroundKnots = float.Parse(tokens[7]);
             TrackAngleTrueNorthDegrees = float.Parse(tokens[8]);
             DateTime date = DateTime.ParseExact(tokens[9], "ddMMyy", CultureInfo.InvariantCulture);

@@ -21,14 +21,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace InvernessPark.Utilities.NMEA.Types {
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.Text;
+using System.Threading.Tasks;
 
-    /// <summary>
-    /// NMEA-0183 GPS Fix
-    /// </summary>
-    public enum Fix3DEnum {
-        NoFix=1,
-        Fix2D=2,
-        Fix3D=3
+namespace InvernessPark.Utilities.NMEA.Types {
+    public class DMSFormatException : FormatException {
+        public DMSFormatException() :base("DMS Format Exception") {
+        }
+
+        public DMSFormatException(string message) : base("DMS Format Exception: " + message) {
+        }
+
+        public DMSFormatException(string message, Exception innerException) : base("DMS Format Exception: " + message, innerException) {
+        }
     }
 }

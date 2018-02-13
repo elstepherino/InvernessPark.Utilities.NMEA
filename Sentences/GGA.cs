@@ -62,8 +62,8 @@ namespace InvernessPark.Utilities.NMEA.Sentences {
         public override INmeaMessage ParseFields(string[] tokens) {
             DataTypeName = tokens[0].TrimStart('$');
             UTC = TimeSpan.ParseExact(tokens[1], @"hhmmss\.FFF", CultureInfo.InvariantCulture);
-            Latitude = Latitude.Parse(tokens[2]+ DELIM_FIELDS + tokens[3], GeoAngle.Format.DMM, GeoAngle.FormatOptions.Compact);
-            Longitude = Longitude.Parse(tokens[4]+ DELIM_FIELDS + tokens[5], GeoAngle.Format.DMM, GeoAngle.FormatOptions.Compact);
+            Latitude = Latitude.Parse(tokens[2]+ DELIM_FIELDS + tokens[3], GeoAngleFormat.DMM, GeoAngleFormatOptions.Compact);
+            Longitude = Longitude.Parse(tokens[4]+ DELIM_FIELDS + tokens[5], GeoAngleFormat.DMM, GeoAngleFormatOptions.Compact);
             FixQuality = ((FixQualityEnum[])Enum.GetValues(typeof(FixQualityEnum)))[int.Parse(tokens[6])];
             SatelliteCount = Int32.Parse(tokens[7]);
             HDOP = float.Parse(tokens[8]);
@@ -77,8 +77,8 @@ namespace InvernessPark.Utilities.NMEA.Sentences {
                 List<string> tokens = new List<string> {
                     DataTypeName,
                     UTC.ToString(@"hhmmss\.fff"),
-                    Latitude.ToString(GeoAngle.Format.DMM, GeoAngle.FormatOptions.Compact),
-                    Longitude.ToString(GeoAngle.Format.DMM, GeoAngle.FormatOptions.Compact),
+                    Latitude.ToString(GeoAngleFormat.DMM, GeoAngleFormatOptions.Compact),
+                    Longitude.ToString(GeoAngleFormat.DMM, GeoAngleFormatOptions.Compact),
                     ((int)FixQuality).ToString(),
                     SatelliteCount.ToString(),
                     HDOP.ToString("0.0#"),
