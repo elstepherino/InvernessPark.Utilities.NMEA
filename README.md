@@ -31,7 +31,7 @@ This is the simplest scenario: using the `DefaultNmeaHandler` class.  `DefaultNm
 >     };
 >     
 >     // ... Create the NMEA receiver
->     DefaultNmeaHandler nmeaReceiver = new DefaultNmeaHandler( nmeaHandler ) ;
+>     NmeaReceiver nmeaReceiver = new NmeaReceiver( nmeaHandler ) ;
 >     
 >     // ... Attach handler for NMEA messages that fail NMEA checksum verification
 >     nmeaReceiver.NmeaMessageFailedChecksum += (bytes, index, count, expected, actual) => {
