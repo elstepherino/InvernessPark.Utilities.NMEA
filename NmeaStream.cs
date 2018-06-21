@@ -109,7 +109,7 @@ namespace InvernessPark.Utilities.NMEA {
         /// <param name="b"></param>
         public void Append(byte b) {
 
-            // ... If we;ve run out of space
+            // ... If we've run out of space
             if (Available == 0) {
                 // ... reset everything
                 Reset();
