@@ -129,7 +129,7 @@ namespace InvernessPark.Utilities.NMEA {
                         _state = StateEnum.Payload;
                     }
 
-                    // *** Note: we only buffe rbytes if we're parsing a NMEA sentence
+                    // *** Note: we only buffer bytes if we're parsing a NMEA sentence
                     break;
 
                 // ... If we're actively in the process of parsing a NMEA message
@@ -146,7 +146,7 @@ namespace InvernessPark.Utilities.NMEA {
                         isMessageReceived = true;
                     }
 
-                    // ... AAppend the byte to the buffer
+                    // ... Append the byte to the buffer
                     _buffer[_offset++] = b;
 
                     // ... If we have a complete NMEA sentence
