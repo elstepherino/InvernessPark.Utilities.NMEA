@@ -28,7 +28,7 @@ using System.Text;
 namespace InvernessPark.Utilities.NMEA {
 
     /// <summary>
-    /// This class implements a NMEA receiver.  Use an instance ofthis objects to 
+    /// This class implements a NMEA receiver.  Use an instance of this object and 
     /// feed bytes via the 'Receive()' method.  
     /// 
     /// </summary>
