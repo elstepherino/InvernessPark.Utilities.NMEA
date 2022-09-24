@@ -88,7 +88,7 @@ namespace InvernessPark.Utilities.NMEA.UnitTest {
                 _receiver.Receive(nmeaBytes);
                 Assert.AreEqual(placeholder.is_state(), true, sentence);
             }
-            catch (Exception e) {
+            catch (Exception) {
                 Assert.AreEqual(false, true, sentence);
             }
         }
