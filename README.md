@@ -53,7 +53,7 @@ This is the simplest scenario: using the `DefaultNmeaHandler` class.  `DefaultNm
                     // ... Attach handler for NMEA messages that fail NMEA checksum verification
                     nmeaReceiver.NmeaMessageFailedChecksum += (bytes, index, count, expected, actual) => {
                         Console.Error.WriteLine("Failed Checksum: {0}; expected {1} but got {2}",
-                            Encoding.ASCII.GetString(bytes.Skip(index).Take(count).ToArray()),
+                            Encoding.ASCII.GetString(bytes.Skip(index).Take(count).ToArray()).Trim(),
                             expected, actual);
                     };
 
