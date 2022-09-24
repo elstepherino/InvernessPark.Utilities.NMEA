@@ -18,46 +18,69 @@ This is the simplest scenario: using the `DefaultNmeaHandler` class.  `DefaultNm
 
 `DefaultNmeaHandler` implements the contract by invoking the event handler `LogNmeaMessage` each time a supported NMEA sentence is successfully parsed.
     
->     using Invernesspark.Utilities.NMEA;
->     
->     ...
->     
->     // ... Create an object to handle parsed NMEA messages
->     DefaultNmeaHandler nmeaHandler = new DefaultNmeaHandler() ;
->     nmeaHandler.LogNmeaMessage += str => {
->         Console.WriteLine("New NMEA Message: {0}", str ) ;
->     };
->     
->     // ... Create the NMEA receiver
->     NmeaReceiver nmeaReceiver = new NmeaReceiver( nmeaHandler ) ;
->     
->     // ... Attach handler for NMEA messages that fail NMEA checksum verification
->     nmeaReceiver.NmeaMessageFailedChecksum += (bytes, index, count, expected, actual) => {
->         Console.Error.WriteLine("Failed Checksum: {0}; expected {1} but got {2}",
->             Encoding.ASCII.GetString(bytes.Skip(index).Take(count).ToArray()),
->             expected, actual );
->     };
->    
->     // ... Attach handler for NMEA messages that contain invalid syntax
->     nmeaReceiver.NmeaMessageDropped += (bytes, index, count, reason) => {
->         Console.WriteLine("Bad Syntax: {0}; reason: {1}",
->             Encoding.ASCII.GetString(bytes.Skip(index).Take(count).ToArray()),
->             reason );
->     };
->    
->     // ... Attach handler for NMEA messages that are ignored (unsupported)
->     nmeaReceiver.NmeaMessageIgnored += (bytes, index, count) => {
->         Console.WriteLine("Ignored: {0}", 
->             Encoding.ASCII.GetString(bytes.Skip(index).Take(count).ToArray()));
->     };
->    
->     // ... Your byte receiving logic...
->     bool keepReceiving = true ;
->     while ( keepReceiving ) {
->         byte [] bytesReceived = /* receive some bytes from socket, file, whatever... */ 
->    
->         // ... Feed the bytes into the NMEA receiver
->         nmeaReceiver.Receive( bytesReceived ) ;
->     }
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using InvernessPark.Utilities.NMEA;
 
-The above code will invoke the appropriate callbacks each time a NMEA sentence is received.
+    namespace NMEA.Demo {
+        class Program {
+
+            static void Main(string[] args) {
+
+                // ... You can supply the path to the data samples fie at the command line
+                string pathToSampleNMEA = args[0];
+
+                // ... Create an object to handle parsed NMEA messages
+                DefaultNmeaHandler nmeaHandler = new DefaultNmeaHandler();
+                nmeaHandler.LogNmeaMessage += str => {
+                    Console.WriteLine("New NMEA Message: {0}", str);
+                };
+
+                // ... Create the NMEA receiver
+                NmeaReceiver nmeaReceiver = new NmeaReceiver(nmeaHandler);
+
+                // ... Attach handler for NMEA messages that fail NMEA checksum verification
+                nmeaReceiver.NmeaMessageFailedChecksum += (bytes, index, count, expected, actual) => {
+                    Console.Error.WriteLine("Failed Checksum: {0}; expected {1} but got {2}",
+                        Encoding.ASCII.GetString(bytes.Skip(index).Take(count).ToArray()),
+                        expected, actual);
+                };
+
+                // ... Attach handler for NMEA messages that contain invalid syntax
+                nmeaReceiver.NmeaMessageDropped += (bytes, index, count, reason) => {
+                    Console.WriteLine("Bad Syntax: {0}; reason: {1}",
+                        Encoding.ASCII.GetString(bytes.Skip(index).Take(count).ToArray()),
+                        reason);
+                };
+
+                // ... Attach handler for NMEA messages that are ignored (unsupported)
+                nmeaReceiver.NmeaMessageIgnored += (bytes, index, count) => {
+                    Console.WriteLine("Ignored: {0}",
+                        Encoding.ASCII.GetString(bytes.Skip(index).Take(count).ToArray()));
+                };
+
+                // ... To simulate receiving data in partial chunks, we'll read the sample file
+                //     up to 32 bytes at a time
+                byte[] buf = new byte[32];
+                int nReceived;
+                using (FileStream fs = File.OpenRead(pathToSampleNMEA)) {
+                    while ((nReceived = fs.Read(buf, 0, buf.Length)) > 0) {
+                        // ... Feed the bytes into the NMEA receiver
+                        nmeaReceiver.Receive( buf.Take( nReceived ).ToArray() );
+                    }
+                }
+
+                Console.WriteLine("Hit ENTER to end program");
+                Console.ReadLine();
+            }
+        }
+    }
+
+
+The above code can be used in a Windows console project.  It take a single command line argument, which is a path to a sample file containging NMEA sentences.  Running it with NMEA data will invoke the appropriate callbacks each time a NMEA sentence is received.
+
+You can generate some sample NMEA data at: https://www.nmeagen.org
