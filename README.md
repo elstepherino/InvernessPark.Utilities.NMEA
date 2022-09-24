@@ -31,51 +31,63 @@ This is the simplest scenario: using the `DefaultNmeaHandler` class.  `DefaultNm
 
             static void Main(string[] args) {
 
-                // ... You can supply the path to the data samples fie at the command line
-                string pathToSampleNMEA = args[0];
+                try {
+                    // ... Sanity check on the arguments
+                    if (args.Length == 0) {
+                        throw new ArgumentException($"Usage: {System.AppDomain.CurrentDomain.FriendlyName} PATH");
+                    }
+                    string sampleFile = args[0];
+                    if (!File.Exists(sampleFile)) {
+                        throw new ArgumentException($"Error! file not found: {sampleFile}");
+                    }
 
-                // ... Create an object to handle parsed NMEA messages
-                DefaultNmeaHandler nmeaHandler = new DefaultNmeaHandler();
-                nmeaHandler.LogNmeaMessage += str => {
-                    Console.WriteLine("New NMEA Message: {0}", str);
-                };
+                    // ... Create an object to handle parsed NMEA messages
+                    DefaultNmeaHandler nmeaHandler = new DefaultNmeaHandler();
+                    nmeaHandler.LogNmeaMessage += str => {
+                        Console.WriteLine("New NMEA Message: {0}", str);
+                    };
 
-                // ... Create the NMEA receiver
-                NmeaReceiver nmeaReceiver = new NmeaReceiver(nmeaHandler);
+                    // ... Create the NMEA receiver
+                    NmeaReceiver nmeaReceiver = new NmeaReceiver(nmeaHandler);
 
-                // ... Attach handler for NMEA messages that fail NMEA checksum verification
-                nmeaReceiver.NmeaMessageFailedChecksum += (bytes, index, count, expected, actual) => {
-                    Console.Error.WriteLine("Failed Checksum: {0}; expected {1} but got {2}",
-                        Encoding.ASCII.GetString(bytes.Skip(index).Take(count).ToArray()),
-                        expected, actual);
-                };
+                    // ... Attach handler for NMEA messages that fail NMEA checksum verification
+                    nmeaReceiver.NmeaMessageFailedChecksum += (bytes, index, count, expected, actual) => {
+                        Console.Error.WriteLine("Failed Checksum: {0}; expected {1} but got {2}",
+                            Encoding.ASCII.GetString(bytes.Skip(index).Take(count).ToArray()),
+                            expected, actual);
+                    };
 
-                // ... Attach handler for NMEA messages that contain invalid syntax
-                nmeaReceiver.NmeaMessageDropped += (bytes, index, count, reason) => {
-                    Console.WriteLine("Bad Syntax: {0}; reason: {1}",
-                        Encoding.ASCII.GetString(bytes.Skip(index).Take(count).ToArray()),
-                        reason);
-                };
+                    // ... Attach handler for NMEA messages that contain invalid syntax
+                    nmeaReceiver.NmeaMessageDropped += (bytes, index, count, reason) => {
+                        Console.WriteLine("Bad Syntax: {0}; reason: {1}",
+                            Encoding.ASCII.GetString(bytes.Skip(index).Take(count).ToArray()),
+                            reason);
+                    };
 
-                // ... Attach handler for NMEA messages that are ignored (unsupported)
-                nmeaReceiver.NmeaMessageIgnored += (bytes, index, count) => {
-                    Console.WriteLine("Ignored: {0}",
-                        Encoding.ASCII.GetString(bytes.Skip(index).Take(count).ToArray()));
-                };
+                    // ... Attach handler for NMEA messages that are ignored (unsupported)
+                    nmeaReceiver.NmeaMessageIgnored += (bytes, index, count) => {
+                        Console.WriteLine("Ignored: {0}",
+                            Encoding.ASCII.GetString(bytes.Skip(index).Take(count).ToArray()));
+                    };
 
-                // ... To simulate receiving data in partial chunks, we'll read the sample file
-                //     up to 32 bytes at a time
-                byte[] buf = new byte[32];
-                int nReceived;
-                using (FileStream fs = File.OpenRead(pathToSampleNMEA)) {
-                    while ((nReceived = fs.Read(buf, 0, buf.Length)) > 0) {
-                        // ... Feed the bytes into the NMEA receiver
-                        nmeaReceiver.Receive( buf.Take( nReceived ).ToArray() );
+                    // ... To simulate receiving data in partial chunks, we'll read the sample file
+                    //     up to 32 bytes at a time
+                    byte[] buf = new byte[32];
+                    int nReceived;
+                    using (FileStream fs = File.OpenRead(sampleFile)) {
+                        while ((nReceived = fs.Read(buf, 0, buf.Length)) > 0) {
+                            // ... Feed the bytes into the NMEA receiver
+                            nmeaReceiver.Receive(buf.Take(nReceived).ToArray());
+                        }
                     }
                 }
-
-                Console.WriteLine("Hit ENTER to end program");
-                Console.ReadLine();
+                catch ( Exception e ) {
+                    Console.Error.WriteLine($"Error! {e.Message}");
+                }
+                finally {
+                    Console.WriteLine("Hit ENTER to end program");
+                    Console.ReadLine();
+                }
             }
         }
     }
